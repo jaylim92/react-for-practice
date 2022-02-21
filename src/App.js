@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 function App() {
   const [loading, setLoading] = useState(true);
   const [coins, setCoins] = useState([]);
+  const [converter, setConverter] = useState("");
   useEffect(() => {
     fetch("https://api.coinpaprika.com/v1/tickers")
       .then((response) => response.json())
@@ -26,6 +27,9 @@ function App() {
           ))}
         </select>
       )}
+      <br />
+      <input type="text" placeholder="USD" value={converter}></input>
+      <h3>{converter}</h3>
     </div>
   );
 }

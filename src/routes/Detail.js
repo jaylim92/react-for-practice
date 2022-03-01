@@ -28,7 +28,7 @@ function Detail() {
           <div>{movie.description_full}</div>
           <ul>
             {movie.genres.map((genre) => (
-              <li>{genre}</li>
+              <li key={genre}>{genre}</li>
             ))}
           </ul>
         </div>

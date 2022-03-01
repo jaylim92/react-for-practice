@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 
 function Detail() {
   const { id } = useParams();
+  const [loading, setLoading] = useState(true);
   const [movie, setMovie] = useState([]);
   useEffect(() => {
     const getDetail = async () => {
@@ -10,15 +11,28 @@ function Detail() {
         await fetch(`https://yts.mx/api/v2/movie_details.json?movie_id=${id}`)
       ).json();
       setMovie(json.data.movie);
+      setLoading(false);
     };
     getDetail();
   }, [id]);
   console.log(movie);
   return (
     <div>
-      {movie.map((movie) => {
-        <h1 key={movie.title}>{movie.title}</h1>;
-      })}
+      {loading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <div>
+          <img src={movie.large_cover_image} alt={movie.title} />
+          <h1>{movie.title}</h1>
+          <h2>{movie.rating}</h2>
+          <div>{movie.description_full}</div>
+          <ul>
+            {movie.genres.map((genre) => (
+              <li>{genre}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
